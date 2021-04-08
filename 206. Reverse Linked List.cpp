@@ -11,6 +11,26 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
+        if(head == NULL || head->next == NULL)  //head==NULL:一開始list就是NULL的情況
+            return head;
+        ListNode* next = head->next;            
+        ListNode* NewHead = reverseList(next);  //遞迴會回傳反轉完成的list的head
+        next->next = head;                      //把NewHead的list的最後一個Node指向下一個Node
+        head->next = NULL;                      //head指向NULL，在下一個遞迴改指向下一個Node
+        return NewHead;
+    }
+};
+
+/*
+Algo 2:
+利用Recursive。
+*/
+
+/*
+Algo 1:
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
         if(head == NULL)
             return NULL;
         ListNode* pre = NULL;       //紀錄前一個Node
@@ -26,8 +46,6 @@ public:
         return pre;
     }
 };
-
-/*
 Comment:
 https://www.youtube.com/watch?v=QuWBvSx9DeI
 利用三個pointer:pre, cur, next去紀錄 前一個,正在操作,下一個將要操作 的Node。
