@@ -1,3 +1,62 @@
+class UnionSet
+{
+private:
+    vector<int> uset;
+    vector<int> height;
+public:
+    UnionSet(int N)
+    {
+        uset = vector<int>(N+1);
+        height = vector<int>(N+1 , 1);
+        for(int i = 0; i < N+1; i++)
+            uset[i] = i;
+    }
+    void merge(int a, int b)
+    {
+        int A = find(a);
+        int B = find(b);
+        if(height[A] > height[B])
+            uset[B] = A;
+        else if(height[A] < height[B])
+            uset[A] = B;
+        else
+        {
+            uset[B] = A;
+            height[A]++;
+        }
+    }
+    int find(int cur)
+    {
+        if(cur == uset[cur])
+            return cur;
+        return find(uset[cur]);
+    }
+};
+
+
+class Solution {
+public:
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        int N = edges.size();
+        UnionSet US(N);
+        for(auto e: edges)
+        {
+            if(US.find(e[0]) == US.find(e[1]))
+            {
+                return {e[0], e[1]};
+            }
+            US.merge(e[0], e[1]);
+        }
+        return {};
+    }
+};
+/*
+Comment:
+以class包裝實作。(同Algo 1作法)
+*/
+
+/*
+Algo 1:
 class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
@@ -40,8 +99,6 @@ private:
         return find(uset[cur]);
     }
 };
-
-/*
 Comment:
 Disjoint Set實作。
 利用uset紀錄每個Node的root
