@@ -113,6 +113,7 @@ algo 3: Binary search
     
 comment:
 利用Bianry Search找出第k大的element。
+(從INT_MIN～INT_MAX找)
 時間複雜度：
 [-2^32,2^32]-->至多猜33次即可猜中
 每猜一次需花Ｏ(n)去計算猜的值為第幾大（即為countNum）
