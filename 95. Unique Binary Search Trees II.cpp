@@ -40,6 +40,44 @@ private:
 	}
 };
 /*
+Algo 2:DP
+Comment:
+對於比j小的元素，共用了結點，對於比他大的，重新申請了空間，在申請空間的時候加上偏移量。
+clone():處理位移offset。
+右子樹需要考慮root的數值，所以會有一個 offset = root的value。clone內部的遞迴都要有offset。
+
+以n=3為例：
+dp[0] = {}
+dp[1] = 1
+dp[2] = 1        2
+         \      /
+          2    1
+
+dp[3]:(i=3)
+
+(j=0) dp[0],dp[2]:
+1           1
+ \           \
+  2           3
+   \         / 
+    3       2
+
+(j=1) dp[1],dp[1]:
+   2
+  / \
+ 1   3
+
+(j=2) dp[2],dp[0]:
+      3        3
+     /        /
+    2        1
+   /          \ 
+  1            2
+
+
+*/
+
+/*
 algo 1:
 class Solution {
 public:
@@ -82,5 +120,6 @@ public:
 };
 Comment:
 利用Recursion依序把可能的SubTree做出，並把所有可能性列出。
+generateSubtree(int n1,int n2)：回傳由Node n1 到 Node n2 組成的tree
 P.S. vector需要push_back(NULL)！
 */
