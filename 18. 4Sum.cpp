@@ -65,9 +65,11 @@ public:
 /*
 Algo1: KSum (延伸通解)
 
-Time Complexity：O(nlogn + n^k)
+Time Complexity：O(nlogn + n^(k-1)) -> O(n^3)
     sort: O(nlogn)
-    dfs: 主要是for loop -> O(n^k)
+    dfs每層: O(n)
+    dfs深度: O(k-1)
+    -> dfs Time Complexity: O(n^(k-1))
 
 Space Complexity：O(n+k)
     result使用: O(n)
