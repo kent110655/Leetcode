@@ -29,6 +29,9 @@ public:
 /*
 algo3：
 I use loop instead of recursive in order to save the space in the recursive.
+Time Complexity:Ｏ(logn)
+Space Complexity:Ｏ(1)
+
 
 algo1 :
 class Solution {
