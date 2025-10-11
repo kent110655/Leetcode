@@ -75,6 +75,112 @@ int x = pq.top();             // 取最大值 (5)
 priority_queue<int, vector<int>, greater<int>> minpq;
 ```
 
+
+### 🧠 5-1. 自訂義結構 + Lambda 比較器（最常見）
+
+#### 範例：根據結構體中的欄位排序
+
+```cpp
+#include <queue>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int id;
+    int cost;
+};
+
+// 小的 cost 優先（最小堆）
+auto cmp = [](const Node& a, const Node& b) {
+    return a.cost > b.cost; // 若 a 比 b 大，a 排在後面
+};
+
+priority_queue<Node, vector<Node>, decltype(cmp)> pq(cmp);
+
+int main() {
+    pq.push({1, 10});
+    pq.push({2, 5});
+    pq.push({3, 20});
+    cout << pq.top().id << " " << pq.top().cost << endl; // 輸出: 2 5
+}
+```
+
+🧩 說明：
+
+* `decltype(cmp)` 用來指定 lambda 型別
+* 比較函數回傳 `true` 表示 **a 應排在 b 後面**
+  （即：a 的優先權低於 b）
+
+---
+
+### 🧱 5-2. 使用結構體 + operator()（傳統做法）
+
+```cpp
+#include <queue>
+#include <vector>
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int id;
+    int cost;
+};
+
+struct Compare {
+    bool operator()(const Node& a, const Node& b) const {
+        return a.cost > b.cost;  // cost 小的優先
+    }
+};
+
+int main() {
+    priority_queue<Node, vector<Node>, Compare> pq;
+    pq.push({1, 10});
+    pq.push({2, 5});
+    pq.push({3, 20});
+    cout << pq.top().id << " " << pq.top().cost << endl; // 2 5
+}
+```
+
+---
+
+### 🧮 5-3. 排序多條件比較（例：cost 小優先，其次 id 小優先）
+
+```cpp
+struct Node {
+    int id;
+    int cost;
+};
+
+struct Compare {
+    bool operator()(const Node& a, const Node& b) const {
+        if (a.cost == b.cost)
+            return a.id > b.id; // cost 相同 → id 小的優先
+        return a.cost > b.cost;
+    }
+};
+```
+
+---
+
+### 💡 5-4. 以 Pair 為例（排序第二個欄位小者優先）
+
+```cpp
+#include <queue>
+#include <vector>
+using namespace std;
+
+priority_queue<pair<int,int>, vector<pair<int,int>>, 
+               function<bool(pair<int,int>, pair<int,int>)>> pq(
+    [](auto &a, auto &b) {
+        return a.second > b.second; // second 小的優先
+    }
+);
+```
+
+---
+
+
 ## 🌳 6. Set / Multiset（集合，不重複 / 可重複，排序）
 
 ```cpp
