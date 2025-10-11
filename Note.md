@@ -160,7 +160,30 @@ lst.pop_back();
 lst.pop_front();
 ```
 
-## ⚙️ 12. 常用演算法（#include <algorithm>）
+## 🧠 12. Pair（成對資料結構）
+
+```cpp
+#include <utility>   // or <bits/stdc++.h>
+
+pair<int, string> p = {1, "apple"};
+int x = p.first;                 // 取第一個元素
+string y = p.second;             // 取第二個元素
+
+// 建立 pair
+auto p2 = make_pair(2, "banana");
+
+// 比較（依 first，再依 second）
+pair<int, int> a = {1, 5};
+pair<int, int> b = {1, 7};
+bool smaller = a < b;            // true
+
+// 可用於 vector、map 等結構
+vector<pair<int, int>> vp;
+vp.push_back({3, 4});
+vp.emplace_back(5, 6);
+```
+
+## ⚙️ 13. 常用演算法（#include <algorithm>）
 
 ```cpp
 #include <algorithm>
